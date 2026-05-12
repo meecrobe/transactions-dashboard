@@ -48,7 +48,7 @@ export function TransactionsTable() {
       : 'Retry Selected';
 
   const selectAllCheckboxMarkup =
-    failedTransactions.length > 0 ? (
+    failedTransactions.length > 0 || batchRetryLoading ? (
       <input
         ref={selectAllRef}
         type="checkbox"
