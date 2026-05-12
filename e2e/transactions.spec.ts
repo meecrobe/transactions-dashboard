@@ -24,12 +24,21 @@ import { expect, test } from 'playwright/test';
  * On reload the MSW service worker may need a moment to re-intercept requests.
  */
 async function waitForTableReady(page: import('playwright/test').Page) {
-  // Spinner row contains "Loading transactions…"
+  // Step 1: wait for MockProvider to finish booting the MSW service worker.
+  // MockProvider renders null until ready, so neither the loading spinner nor
+  // any data rows are present during that window. Waiting for the <table>
+  // element to appear confirms that MockProvider has called setReady(true) and
+  // TransactionsTable has mounted — regardless of whether the fetch completes
+  // before or after we check.
+  await expect(page.locator('table')).toBeVisible({ timeout: 15_000 });
+  // Step 2: wait for the spinner row ("Loading transactions…") to disappear.
+  // If the fetch has already resolved (fast network / warm MSW), this is a
+  // no-op; otherwise it waits for the fetch to complete.
   await expect(page.getByText('Loading transactions')).not.toBeVisible({
     timeout: 15_000,
   });
-  // Wait for real data rows — ID cells are rendered as font-mono td elements
-  // and only exist when the API response has been received and rendered.
+  // Step 3: wait for real data rows — ID cells are rendered as font-mono td
+  // elements and only exist when the API response has been received and rendered.
   await expect(page.locator('tbody td.font-mono').first()).toBeVisible({
     timeout: 15_000,
   });

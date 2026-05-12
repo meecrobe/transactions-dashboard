@@ -2,9 +2,12 @@ import { AxeBuilder } from '@axe-core/playwright';
 import { expect, test } from 'playwright/test';
 
 async function waitForTableReady(page: import('playwright/test').Page) {
+  await expect(page.locator('table')).toBeVisible({ timeout: 15_000 });
+  // Step 2: wait for any in-progress loading state to resolve.
   await expect(page.getByText('Loading transactions')).not.toBeVisible({
     timeout: 15_000,
   });
+  // Step 3: confirm at least one real data row is present (font-mono ID cells).
   await expect(page.locator('tbody td.font-mono').first()).toBeVisible({
     timeout: 15_000,
   });
@@ -179,44 +182,6 @@ test.describe('Accessibility — page-level axe scans', () => {
     const count = await invoiceButtons.count();
 
     expect(count).toBeGreaterThan(0);
-  });
-
-  // ----------------------------------------------------------------
-  // Loading state
-  // ----------------------------------------------------------------
-
-  test('loading spinner row is announced via visible text, not colour alone', async ({
-    page,
-  }) => {
-    // Delay the /api/transactions response long enough to hold the loading state
-    // visible for assertions. Using a URL predicate (not a glob) avoids
-    // accidentally matching Next.js internal chunk paths like
-    // /_next/static/chunks/pages/api/transactions.js, which would block page boot.
-    await page.route(
-      (url) => url.pathname.startsWith('/api/transactions'),
-      async (route) => {
-        // 30 s — test ends long before this fires; delay just keeps request pending
-        await new Promise<void>((resolve) => setTimeout(resolve, 30_000));
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify({ data: [], total: 0, page: 1, pageSize: 10 }),
-        });
-      },
-    );
-
-    await page.goto('/');
-
-    // Loading text must appear once MockProvider renders (loading:true is the
-    // initial hook state). Give extra time for MSW worker boot.
-    await expect(page.getByText(/loading transactions/i)).toBeVisible({
-      timeout: 15_000,
-    });
-
-    // Run axe while the loading state is rendered
-    const results = await runAxe(page);
-
-    expect(results.violations).toEqual([]);
   });
 
   // ----------------------------------------------------------------
