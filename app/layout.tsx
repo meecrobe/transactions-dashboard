@@ -25,19 +25,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const contentMarkup =
-    process.env.NODE_ENV === 'development' ? (
-      <MockProvider>{children}</MockProvider>
-    ) : (
-      children
-    );
-
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{contentMarkup}</body>
+      <body className="min-h-full flex flex-col">
+        <MockProvider>{children}</MockProvider>
+      </body>
     </html>
   );
 }
