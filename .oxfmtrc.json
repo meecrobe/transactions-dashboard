@@ -1,0 +1,30 @@
+{
+  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": true,
+  "sortImports": {
+    "customGroups": [
+      {
+        "groupName": "react-libs",
+        "elementNamePattern": ["react", "react-**"]
+      },
+      {
+        "groupName": "@-libs",
+        "elementNamePattern": ["@"]
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "package.json",
+    "package-lock.json",
+    ".vscode",
+    ".claude",
+    "node_modules",
+    "public",
+    "CLAUDE.md",
+    "AGENTS.md",
+    "next-env.d.ts",
+    ".gitignore"
+  ]
+}

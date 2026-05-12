@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm info *)",
+      "Bash(npx playwright *)",
+      "Bash(npm run *)",
+      "Bash(npx vitest *)",
+      "Bash(mkdir -p /Users/vadzim/Work/transactions-dashboard/components/PlainButton/tests)",
+      "Bash(mkdir -p /Users/vadzim/Work/transactions-dashboard/components/TransactionsTable/tests)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}
