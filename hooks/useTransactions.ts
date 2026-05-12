@@ -165,9 +165,9 @@ export function useTransactions() {
     }
 
     setBatchRetryActive(true);
-    setSelectedIds(new Set());
     allFailedIdsRef.current = [];
     await Promise.all(ids.map((id) => handleRetry(id)));
+    setSelectedIds(new Set());
     setBatchRetryActive(false);
   }
 

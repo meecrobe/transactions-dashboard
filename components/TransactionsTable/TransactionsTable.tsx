@@ -53,8 +53,9 @@ export function TransactionsTable() {
         ref={selectAllRef}
         type="checkbox"
         checked={allFailedSelected}
+        disabled={batchRetryLoading}
         onChange={(e) => handleSelectAll(e.target.checked)}
-        className="h-4 w-4 rounded border-zinc-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+        className="h-4 w-4 rounded border-zinc-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         aria-label="Select all failed transactions on this page"
       />
     ) : null;
