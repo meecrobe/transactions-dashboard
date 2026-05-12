@@ -8,8 +8,12 @@ async function initMocks() {
   }
 
   const { worker } = await import('@/mocks/browser');
+  const base = new URL('.', window.location.href).pathname;
 
-  await worker.start({ onUnhandledRequest: 'bypass' });
+  await worker.start({
+    serviceWorker: { url: `${base}mockServiceWorker.js` },
+    onUnhandledRequest: 'bypass',
+  });
 }
 
 export function MockProvider({ children }: { children: React.ReactNode }) {

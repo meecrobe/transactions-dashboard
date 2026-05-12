@@ -5,7 +5,12 @@ import { worker } from '@/mocks/browser';
 
 const preview: Preview = {
   async beforeAll() {
-    await worker.start({ onUnhandledRequest: 'bypass' });
+    const base = new URL('.', window.location.href).pathname;
+
+    await worker.start({
+      serviceWorker: { url: `${base}mockServiceWorker.js` },
+      onUnhandledRequest: 'bypass',
+    });
   },
   parameters: {
     controls: {
