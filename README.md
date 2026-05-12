@@ -34,14 +34,14 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Available scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Build for production |
-| `npm run typecheck` | Run TypeScript type checking |
-| `npm run lint` | Lint with ESLint |
-| `npm test` | Run unit/component tests with Vitest |
-| `npm run test:run` | Run tests once (no watch) |
-| `npm run test:e2e` | Run Playwright end-to-end tests |
-| `npm run storybook` | Start Storybook on port 6006 |
+| Script                    | Description                           |
+| ------------------------- | ------------------------------------- |
+| `npm run dev`             | Start the development server          |
+| `npm run build`           | Build for production                  |
+| `npm run typecheck`       | Run TypeScript type checking          |
+| `npm run lint`            | Lint with ESLint                      |
+| `npm test`                | Run unit/component tests with Vitest  |
+| `npm run test:run`        | Run tests once (no watch)             |
+| `npm run test:e2e`        | Run Playwright end-to-end tests       |
+| `npm run storybook`       | Start Storybook on port 6006          |
 | `npm run build-storybook` | Build Storybook for static deployment |
